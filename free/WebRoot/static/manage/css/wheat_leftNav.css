@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+#leftNav{ width:150px;}
+#leftNav h1{ height:40px; line-height:40px; background:url(../images/nav_bg1.png) left top no-repeat;}
+#leftNav h1 span{ padding-left:45px;  color:#fff;}
+#leftNav h1 span.asset_mag{background:url(../images/Wallet.png) 15px center no-repeat;}
+#leftNav h1 span.repayment_mag{background: url(../images/payments.png) top center no-repeat;}
+#leftNav h1 span.finance_mag{background: url(../images/financee.png) top center no-repeat;}
+#leftNav h1 span.usermag_mag{background: url(../images/userr.png) top center no-repeat;}
+#leftNav h1 span.statistics_mag{background: url(../images/data_analytics.png) top center no-repeat;}
+#leftNav h1 span.sysmag_mag{background: url(../images/system_task.png) top center no-repeat;}
+#leftNav h1 span.customserv_mag{background: url(../images/Communicate.png) top center no-repeat;}
+#leftNav h2{ height: 40px; line-height:38px; padding-left:15px; background: url(../images/line.png) center bottom no-repeat; position: relative; cursor: pointer;}
+#leftNav h2 em{ position: absolute;  width: 7px; height: 11px; background: url(../images/arrow_right.png); right:15px; top:50%; margin-top:-6px;transition: all 0.3s cubic-bezier(0.04, 0.7, 0.66, 0.98) 0s; }
+#leftNav h2.open{ line-height: 40px; background: #d4d3d2; }
+#leftNav h2.open em{ transform: rotate(90deg); }
+#leftNav ul li{ padding-left:30px; height:40px; line-height: 38px; background: url(../images/line.png) center bottom no-repeat;}
+#leftNav ul li a{ display: block; }
+#leftNav ul li a:hover,#leftNav ul li a.active{ color:#ea5a2f;}
+
+
+
+
+
+
+
+
+
+
+

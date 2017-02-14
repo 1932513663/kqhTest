@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-4.1.xsd
+          http://www.springframework.org/schema/beans 
+		  http://www.springframework.org/schema/beans/spring-beans.xsd
+		  http://www.springframework.org/schema/tx
+		  http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		  http://www.springframework.org/schema/aop 
+		  http://www.springframework.org/schema/aop/spring-aop-4.1.xsd"
+	 default-lazy-init="false">
+	
+	<!-- 属性文件读入多个时以逗号分隔 :问题尚未解决：文佳加载在了datasource之后，导致无法正常${}加载值-->
+	<context:property-placeholder ignore-unresolvable="true" file-encoding="utf-8" location="classpath:properties/jdbc.properties"/>  
+	<!-- <bean
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+        lazy-init="true">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:properties/jdbc.properties</value>
+            </list>
+        </property>
+    </bean> -->
+	<context:annotation-config />
+	<!-- 扫面并注入此包下所有类的bean与@Repository注入bean效果一样 固不能既用此方法扫面，又用Repository注入bean -->
+	<!-- 扫描自动注入为bean -->
+	<context:component-scan base-package="cn.free.modules.*,shiro.*,core.base.*" />
+
+	<!-- 事务相关控制 -->
+	<!-- 基于注解方式配置事务 proxy-target-class="true" -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:advice id="userTxAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 把事务控制在service层 -->
+	<aop:config>
+		<aop:pointcut id="baseAop" expression="execution(* core.base..service..*Service.*(..))" />
+		<aop:pointcut id="shiroAop" expression="execution(* shiro..service..*Service.*(..))" />
+		<aop:pointcut id="modulesAop" expression="execution(* cn.free.modules..service..*Service.*(..))" />
+		<aop:advisor pointcut-ref="baseAop" advice-ref="userTxAdvice" />
+		<aop:advisor pointcut-ref="shiroAop" advice-ref="userTxAdvice" />
+		<aop:advisor pointcut-ref="modulesAop" advice-ref="userTxAdvice" />
+	</aop:config>
+
+	<!-- spring与mybatis的整合 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:/modules/sqlmap/*/*.xml</value>
+				<value>classpath:/shiro/sqlmap/*/*.xml</value>
+			</array>
+		</property>
+		<property name="typeAliasesPackage" value="cn.free.modules.model,shiro.model" /><!-- cn.free.modules.model, -->
+		<!-- Spring pagehelper配置方法 -->
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value> 
+							dialect=mysql
+							reasonable=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- SqlSessionTemplate保证了使用spring的当前事务 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- 数据源定义连接池 -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+		<!-- com.mysql.jdbc.Driver -->
+		<property name="driverClass" value="${dev.jdbc.driverClassName}"/>
+		<property name="jdbcUrl" value="${dev.jdbc.url}" />
+		<property name="username" value="${dev.jdbc.username}" /><!-- ${dev.jdbc.username}default-autowire="byName" -->
+		<property name="password" value="${dev.jdbc.password}" />
+		<property name="idleConnectionTestPeriod" value="30" />
+		<property name="idleMaxAge" value="60" />
+		<property name="maxConnectionsPerPartition" value="5" />
+		<property name="minConnectionsPerPartition" value="1" />
+		<property name="partitionCount" value="1" />
+		<property name="acquireIncrement" value="1" />
+		<property name="statementsCacheSize" value="10" />
+		<property name="releaseHelperThreads" value="3" />
+		<property name="statementReleaseHelperThreads" value="10" />
+		<property name="lazyInit" value="true" />
+	</bean>
+
+	<!-- 扫描mapper文件 -->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="shiro.dao,cn.free.modules.dao,tk.mybatis.mapper.common.Mapper" />
+		<property name="markerInterface" value="tk.mybatis.mapper.common.Mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="properties">
+			<value>
+				mappers=tk.mybatis.mapper.common.Mapper
+				ORDER=BEFORE
+			</value>
+		</property>
+	</bean>
+	
+
+	<!-- 使用ehcache缓存 -->
+	<!-- <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:config/ehcache.xml" />
+	</bean> -->
+	<bean id="qurtTest" class="junit.QurtTest" />
+	<bean id="springContextHolder" class="utils.SpringContextHolder" />
+</beans>

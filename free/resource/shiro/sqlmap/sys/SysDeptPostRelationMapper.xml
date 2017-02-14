@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysDeptPostRelationMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysDeptPostRelation">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="CHAR" />
+		<result column="POST_ID" property="postId" jdbcType="CHAR" />
+		<result column="STATE_SIGN" property="stateSign" jdbcType="INTEGER" />
+	</resultMap>
+</mapper>

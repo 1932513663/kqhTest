@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysRoleMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysRole">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="CHAR" />
+		<result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="ADD_TIME" property="addTime" jdbcType="TIMESTAMP" />
+		<result column="EDIT_TIME" property="editTime" jdbcType="TIMESTAMP" />
+		<result column="ROLE_ENGLISH_NAME" property="roleEnglishName"
+			jdbcType="VARCHAR" />
+		<result column="IS_AVAILABLE" property="isAvailable" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated -->
+		ID, PARENT_ID, ROLE_NAME, DESCRIPTION, ADD_TIME, EDIT_TIME,
+		ROLE_ENGLISH_NAME, IS_AVAILABLE
+	</sql>
+	<insert id="saveRole" parameterType="shiro.model.sys.SysRole">
+		<selectKey keyProperty="id" resultType="java.lang.String"
+			order="BEFORE">
+			SELECT replace(UUID(),'-','') from dual
+		</selectKey>
+		insert into t_sys_role
+		(
+		<include refid="Base_Column_List" />
+		)
+		values
+		(#{id},#{parentId},#{roleName},#{description},#{addTime},#{editTime},#{roleEnglishName},#{isAvailable})
+	</insert>
+</mapper>

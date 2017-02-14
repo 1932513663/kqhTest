@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="SQLServer" targetRuntime="MyBatis3"><!-- id="Mysql" -->
+    <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+    	<property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+		<!-- 当数据库表名区分大小写时设置为true -->
+    	<property name="caseSensitive" value="false"/>
+    </plugin>
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://127.0.0.1:3306/kqh"
+        userId="root"
+        password="admin">
+    </jdbcConnection>
+    <!-- <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+        connectionURL="jdbc:sqlserver://10.199.201.91:1433;SelectMethod=cursor;databaseName=CultureBudgetDev"
+        userId="cbudgetuser_dev"
+        password="n^24v6DL">
+    </jdbcConnection> -->
+
+    <javaModelGenerator targetPackage="com.entity" targetProject="F:\java_project\ruantong\work\free\src\test\" >
+ 		<property name="enableSubPackages" value="false" />
+		<property name="trimStrings" value="false" />
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.entity.mapper"  targetProject="F:\java_project\ruantong\work\free\src\test\" />
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.dao"  targetProject="F:\java_project\ruantong\work\free\src\test\" />
+
+    <table tableName="t_sys_user_role" domainObjectName="SysUserRole">
+      <!-- <generatedKey column="id" sqlStatement="SQLServer" identity="true" /> -->
+      <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+    </table>
+
+  </context>
+</generatorConfiguration>

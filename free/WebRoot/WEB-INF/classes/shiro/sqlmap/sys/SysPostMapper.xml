@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysPostMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysPost">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="CHAR" />
+		<result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+		<result column="DEPT_ID" property="deptId" jdbcType="CHAR" />
+		<result column="COMPANY_ID" property="companyId" jdbcType="CHAR" />
+		<result column="DEEP" property="deep" jdbcType="INTEGER" />
+		<result column="PARENT_PATH" property="parentPath" jdbcType="VARCHAR" />
+		<result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+		<result column="ADD_TIME" property="addTime" jdbcType="DATE" />
+		<result column="EDIT_TIME" property="editTime" jdbcType="DATE" />
+		<result column="DEL_TIME" property="delTime" jdbcType="DATE" />
+		<result column="ADD_USER" property="addUser" jdbcType="CHAR" />
+		<result column="EDIT_USER" property="editUser" jdbcType="CHAR" />
+		<result column="DEL_USER" property="delUser" jdbcType="CHAR" />
+		<result column="DEL" property="del" jdbcType="CHAR" />
+		<result column="OLD_ID" property="oldId" jdbcType="CHAR" />
+		<result column="OLD_PARENT_ID" property="oldParentId" jdbcType="CHAR" />
+		<result column="OLD_DEPT_ID" property="oldDeptId" jdbcType="CHAR" />
+		<result column="OLD_COM_ID" property="oldComId" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated -->
+		ID, PARENT_ID, POST_NAME, DEPT_ID, COMPANY_ID, DEEP, PARENT_PATH,
+		PARENT_NAME, ADD_TIME,
+		EDIT_TIME, DEL_TIME, ADD_USER, EDIT_USER, DEL_USER, DEL, OLD_ID, OLD_PARENT_ID,
+		OLD_DEPT_ID,
+		OLD_COM_ID
+	</sql>
+
+	<insert id="savePost" parameterType="shiro.model.sys.SysPost">
+		<selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+			SELECT replace(UUID(),'-','') from dual
+		</selectKey>
+		insert into t_sys_company
+		(
+		<include refid="Base_Column_List" />
+		)
+		values
+		(#{id},#{parentId},#{postName},#{deptId},#{companyId},#{deep},
+		 #{parentPath},#{parentName},#{addTime},#{editTime},#{delTime},
+		 #{addUser},#{editUser},#{delUser},#{del},#{oldId},
+		 #{oldParentId},#{oldDeptId},#{oldComId})
+	</insert>
+</mapper>

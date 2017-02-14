@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysRoleMenuMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysRoleMenu">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="ROLE_ID" property="roleId" jdbcType="CHAR" />
+		<result column="MENU_ID" property="menuId" jdbcType="CHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated -->
+		ROLE_ID, MENU_ID
+	</sql>
+
+	<delete id="deleteByRoleId" parameterType="shiro.model.sys.SysRoleMenu">
+		delete from
+		t_sys_role_menu
+		where role_id = #{roleId,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertRoleMenuOfBatch" parameterType="java.util.List">
+		insert into t_sys_role_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			role_id,
+			menu_id,
+		</trim>
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{item.roleId,jdbcType=VARCHAR},
+				#{item.menuId,jdbcType=VARCHAR},
+			</trim>
+		</foreach>
+	</insert>
+</mapper>

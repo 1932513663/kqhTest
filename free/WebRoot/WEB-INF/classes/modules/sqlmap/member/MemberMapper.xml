@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.free.modules.dao.MemberMapper">
+	<resultMap id="BaseResultMap" type="cn.free.modules.model.Member">
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="LOGIN_NAME" property="loginName" jdbcType="VARCHAR" />
+	</resultMap>
+</mapper>

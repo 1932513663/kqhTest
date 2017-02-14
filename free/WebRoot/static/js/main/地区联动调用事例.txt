@@ -1,0 +1,24 @@
+﻿1.第一步 引入JS
+	<script src="${ctx}/static/js/main/region.js"></script>
+
+2.回显/初始化省市县
+	$(function(){
+    	initRegion("${provice }","${city }","${county }");
+    });
+    
+3.	DIV放置
+	<div class="regionLinkage "></div>
+    
+4.数据获取
+	
+	获取ID：getProvinceId()，getCityId()，getCountyId()
+	获取内容：getProvinceText()，getCityText()，getCountyText()
+
+
+
+淘宝九元学社_dubbo最新更新视频教程链接: http://pan.baidu.com/s/1dE50mvJ 密码: 7b8y
+淘宝九元学社_dubbo视频教程链接：链接: http://pan.baidu.com/s/1gfCuHCf 密码: 7y9d
+9mi025_淘宝九元学社_超级架构视频26套
+链接: https://pan.baidu.com/s/1hsLj36G 密码: iref
+链接: https://pan.baidu.com/s/1hsLj36G
+kafka链接:http://pan.baidu.com/s/1bnQ613L 密码:6ni2

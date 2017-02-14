@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysCompanyMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysCompany">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="CHAR" />
+		<result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="TEL" property="tel" jdbcType="VARCHAR" />
+		<result column="FAX" property="fax" jdbcType="VARCHAR" />
+		<result column="ADD_USER" property="addUser" jdbcType="CHAR" />
+		<result column="ADD_TIME" property="addTime" jdbcType="DATE" />
+		<result column="EDIT_TIME" property="editTime" jdbcType="DATE" />
+		<result column="DEL" property="del" jdbcType="CHAR" />
+		<result column="OLD_ID" property="oldId" jdbcType="CHAR" />
+		<result column="OLD_PARENT_ID" property="oldParentId" jdbcType="CHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated -->
+		ID, PARENT_ID, COMPANY_NAME, ADDRESS, DESCRIPTION, TEL, FAX, ADD_USER,
+		ADD_TIME,
+		EDIT_TIME, DEL, OLD_ID, OLD_PARENT_ID
+	</sql>
+
+	<insert id="saveCompany" parameterType="shiro.model.sys.SysCompany">
+		<selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+			SELECT replace(UUID(),'-','') from dual
+		</selectKey>
+		insert into t_sys_company
+		(
+		<include refid="Base_Column_List" />
+		)
+		values
+		(#{id},#{parentId},#{companyName},#{address},#{description},#{tel},#{fax},#{addUser},#{addTime},#{del},#{oldId},#{oldParentId})
+	</insert>
+</mapper>

@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ include file="../../common/script.jsp"%>
+<%@ include file="../../common/taglibs.jsp"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+</head>
+<script type="text/javascript">
+var companyId='${companyId}';
+$(function(){
+	initCompany(companyId);
+	/* toDept(companyId);
+	toPost(companyId); */
+	selectTabs();
+});
+//加载选中公司的详细信息
+function initCompany(companyId){
+	var ifCompany = document.getElementById("ifCompany");
+	ifCompany.src = "${ctx}/manage/sys/company/company?companyId="+companyId;
+}
+
+//跳转部门首页
+function toDept(companyId){
+	var ifDept = document.getElementById("ifDept");
+	ifDept.src = "${ctx}/manage/sys/department/index?companyId="+companyId;
+}
+
+//跳转职位首页
+function toPost(companyId){
+	var ifPost = document.getElementById("ifPost");
+	ifPost.src = "${ctx}/manage/sys/post/index?companyId="+companyId;
+}
+
+//根据tab选择结果跳转不同的ifreame进行新增
+function add(){
+	var tab = $('#conpany_dept_post_id').tabs('getSelected'); 
+	var index = $('#conpany_dept_post_id').tabs('getTabIndex',tab);
+	var iframeId;
+	if(index==0){
+		iframeId="ifCompany";
+		companyAdd(iframeId);
+		return;
+	}
+	if(index==1){
+		iframeId="ifDept";
+	}
+	if(index==2){
+		iframeId="ifPost";
+	}
+	var ifContent=document.getElementById(iframeId);
+	ifContent.contentWindow.add();
+}
+
+//跳转公司添加页面
+function companyAdd(iframeId){
+	var ifCompany = document.getElementById(iframeId);
+	ifCompany.src = "${ctx}/manage/sys/company/toAdd";
+}
+
+//根据tab选择结果跳转不同的ifreame进行修改
+function update(){
+	var tab = $('#conpany_dept_post_id').tabs('getSelected'); 
+	var index = $('#conpany_dept_post_id').tabs('getTabIndex',tab);
+	var iframeId;
+	if(index==0){
+		iframeId="ifCompany";
+	}
+	if(index==1){
+		iframeId="ifDept";
+	}
+	if(index==2){
+		iframeId="ifPost";
+	}
+	var ifContent=document.getElementById(iframeId);
+	ifContent.contentWindow.update();
+}
+
+//根据tab选择结果跳转不同的ifreame进行删除
+function del(){
+	var tab = $('#conpany_dept_post_id').tabs('getSelected'); 
+	var index = $('#conpany_dept_post_id').tabs('getTabIndex',tab);
+	var iframeId;
+	if(index==0){
+		iframeId="ifCompany";
+	}
+	if(index==1){
+		iframeId="ifDept";
+	}
+	if(index==2){
+		iframeId="ifPost";
+	}
+	var ifContent=document.getElementById(iframeId);
+	ifContent.contentWindow.del();
+}
+
+//切换选项卡
+function selectTabs(){
+	$('#conpany_dept_post_id').tabs({    
+	    border:false,
+	    selected:0,
+	    onSelect:function(title,index){   
+	        if(index==0){
+	        	var ifCompany=document.getElementById("ifCompany");
+	        	ifCompany.contentWindow.isEnableButton();
+	        } 
+	        if(index==1){
+	        	toDept(companyId);
+	        	/* var ifDeptMain=document.getElementById("ifDept");
+	        	var deptIfrCont=ifDeptMain.contentWindow.document.getElementById("deptIfrCont");
+	        	var ifDept=deptIfrCont.contentWindow.document.getElementById("ifDept");
+	        	ifDept.contentWindow.isEnableButton(); */
+	        }
+	        if(index==2){
+	        	toPost(companyId);
+	        	/* var ifPostMain=document.getElementById("ifPost");
+	        	var postIndexIfrCont=ifPostMain.contentWindow.document.getElementById("postIndexIfrCont");
+	        	var postIfrCont=postIndexIfrCont.contentWindow.document.getElementById("postIfrCont");
+	        	var ifPost=postIfrCont.contentWindow.document.getElementById("ifPost");
+	        	ifPost.contentWindow.isEnableButton(); */
+	        }
+	    }
+	});
+}
+</script>
+<body style="padding: 0px;">
+	<div id="conpany_dept_post_id" class="easyui-tabs" data-options="plain:true,pill:true,tabWidth:100" style="width:100%;height:470px;">
+		<div title="公司" style="padding: 0px">
+			<iframe allowtransparency="true" id="ifCompany" src="" frameborder="0" scrolling="no" style="height:100%;width:100%;"></iframe>
+		</div>
+		<div title="部门" style="padding: 0px">
+			<iframe allowtransparency="true" id="ifDept" src="" frameborder="0" scrolling="no" style="height:100%;width:100%;"></iframe>	
+		</div>
+		<div title="职位" style="padding: 0px">
+			<iframe allowtransparency="true" id="ifPost" src="" frameborder="0" scrolling="no" style="height:100%;width:100%;"></iframe>	
+		</div>
+	</div>
+</body>
+</html>

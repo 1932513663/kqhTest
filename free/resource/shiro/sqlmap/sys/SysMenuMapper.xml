@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysMenuMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysMenu">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="CHAR" />
+		<result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+		<result column="FORWARD" property="forward" jdbcType="VARCHAR" />
+		<result column="TARGET" property="target" jdbcType="VARCHAR" />
+		<result column="IMAGE" property="image" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="SEQ" property="seq" jdbcType="INTEGER" />
+		<result column="ADD_TIME" property="addTime" jdbcType="TIMESTAMP" />
+		<result column="EDIT_TIME" property="editTime" jdbcType="TIMESTAMP" />
+		<result column="PERMISSION_CODE" property="permissionCode"
+			jdbcType="VARCHAR" />
+		<result column="IS_SHOW" property="isShow" jdbcType="CHAR" />
+		<result column="SYSTEM_ID" property="systemId" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated -->
+		ID, PARENT_ID, MENU_NAME, FORWARD, TARGET, IMAGE, DESCRIPTION, SEQ,
+		ADD_TIME, EDIT_TIME,
+		PERMISSION_CODE, IS_SHOW, SYSTEM_ID
+	</sql>
+
+	<insert id="saveMenu" parameterType="shiro.model.sys.SysMenu">
+		<selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+			SELECT replace(UUID(),'-','') from dual
+		</selectKey>
+		insert into t_sys_menu
+		(
+		<include refid="Base_Column_List" />
+		)
+		values
+		(#{id},#{parentId},#{menuName},#{forward},#{target},
+		#{image},#{description},#{seq},#{addTime},#{editTime},
+		#{permissionCode},#{isShow},#{systemId}
+		)
+	</insert>
+</mapper>

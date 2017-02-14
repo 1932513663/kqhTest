@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysDepartmentMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysDepartment">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" property="id" jdbcType="CHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="CHAR" />
+		<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+		<result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+		<result column="DEPT_INTRO" property="deptIntro" jdbcType="VARCHAR" />
+		<result column="DEPT_TYPE" property="deptType" jdbcType="CHAR" />
+		<result column="COMPANY_ID" property="companyId" jdbcType="CHAR" />
+		<result column="DEPT_SPELL" property="deptSpell" jdbcType="VARCHAR" />
+		<result column="PARENT_PATH" property="parentPath" jdbcType="VARCHAR" />
+		<result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="TEL" property="tel" jdbcType="VARCHAR" />
+		<result column="DEEP" property="deep" jdbcType="INTEGER" />
+		<result column="DEL" property="del" jdbcType="CHAR" />
+		<result column="ADD_TIME" property="addTime" jdbcType="DATE" />
+		<result column="EDIT_TIME" property="editTime" jdbcType="DATE" />
+		<result column="DEL_TIME" property="delTime" jdbcType="DATE" />
+		<result column="ADD_USER" property="addUser" jdbcType="CHAR" />
+		<result column="DEL_USER" property="delUser" jdbcType="CHAR" />
+		<result column="EDIT_USER" property="editUser" jdbcType="CHAR" />
+		<result column="OLD_ID" property="oldId" jdbcType="CHAR" />
+		<result column="OLD_PARENT_ID" property="oldParentId" jdbcType="CHAR" />
+		<result column="OLD_COM_ID" property="oldComId" jdbcType="CHAR" />
+		<result column="MANAGER_ID" property="managerId" jdbcType="CHAR" />
+		<result column="OLD_MANAGER_ID" property="oldManagerId"
+			jdbcType="CHAR" />
+		<result column="TITLE_TIME" property="titleTime" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated -->
+		ID, PARENT_ID, DEPT_NAME, DESCRIPTION, DEPT_INTRO, DEPT_TYPE,
+		COMPANY_ID, DEPT_SPELL,
+		PARENT_PATH, PARENT_NAME, ADDRESS, TEL, DEEP,
+		DEL, ADD_TIME, EDIT_TIME, DEL_TIME,
+		ADD_USER, DEL_USER, EDIT_USER,
+		OLD_ID, OLD_PARENT_ID, OLD_COM_ID,
+		MANAGER_ID, OLD_MANAGER_ID,
+		TITLE_TIME
+	</sql>
+
+	<insert id="saveDept" parameterType="shiro.model.sys.SysDepartment">
+		<selectKey keyProperty="id" resultType="java.lang.String"
+			order="BEFORE">
+			SELECT replace(UUID(),'-','') from dual
+		</selectKey>
+		insert into t_sys_department
+		(
+		<include refid="Base_Column_List" />
+		)
+		values
+		(#{id},#{parentId},#{deptName},#{description},
+		 #{deptIntro},#{deptType},#{companyId},#{deptSpell},
+		 #{parentPath},#{parentName},#{address},#{tel},
+		 #{deep},#{del},#{addTime},#{editTime},#{delTime},#{addUser},#{delUser},
+		 #{editUser},#{oldId},#{oldParentId},#{oldComId},#{managerId},
+		 #{oldManagerId},#{titleTime}
+		)
+	</insert>
+</mapper>

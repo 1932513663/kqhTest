@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shiro.dao.sys.SysUserRoleMapper">
+	<resultMap id="BaseResultMap" type="shiro.model.sys.SysUserRole">
+		<!-- WARNING - @mbggenerated -->
+		<result column="ROLE_ID" property="roleId" jdbcType="CHAR" />
+		<result column="USER_ID" property="userId" jdbcType="CHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbggenerated -->
+		ROLE_ID, USER_ID
+	</sql>
+
+	<delete id="deleteByUserId" parameterType="shiro.model.sys.SysUserRole">
+		delete from
+		t_sys_user_role
+		where user_id = #{userId,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insertUserRoleOfBatch" parameterType="java.util.List">
+		insert into t_sys_user_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			user_id,
+			role_id,
+		</trim>
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{item.userId,jdbcType=VARCHAR},
+				#{item.roleId,jdbcType=VARCHAR},
+			</trim>
+		</foreach>
+	</insert>
+</mapper>

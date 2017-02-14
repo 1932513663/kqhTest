@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 全屏背景 */
+html,body{ height: 100%; }
+#wheat{ background: url(../images/login_bg.jpg) top center no-repeat; height: 100%; background-size:cover; }
+.login_box{ margin:0 auto;  width: 590px; height: 420px; background:rgba(255,255,255,.73); box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.14); border-radius: 3px; position:relative; top:143px;}
+.login_tit{ height: 63px; line-height: 63px; font-size: 20px; padding-left: 19px;border-bottom: 1px solid #e2e2e2; color:#333; }
+.login_list{ padding-top: 31px; }
+.login_list li{ height:42px; padding-bottom: 23px; position: relative; }
+.login_list li span{ display: inline-block; width: 165px; line-height: 42px; font-size: 14px; color:#333; text-align: right;}
+.login_list li input{ background: #fff; height: 40px; border:1px solid #e2e2e2; border-radius:2px; padding:0 10px; width: 251px; color:#333; font-size: 14px;}
+.login_list li input[placeholder]{ color:#999; }
+.login_list li p{ position: absolute; left:168px; top:42px; line-height: 20px; color:#ea592f; font-size: 12px; }
+.login_list li:last-child{ padding-bottom: 6px; }
+#login_btn{ border-radius: 3px; background-color: rgb(234, 89, 47); left: 860px; top: 411px; width: 273px; height: 43px; color:#fff; line-height: 40px; cursor: pointer; text-align: center; margin-left:165px; }
+.forget_pasw{ padding-left: 165px; line-height: 26px; color:#ea592f; }
+.forget_pasw a{ color:#1380c0; }
+.change_pasw_tip{}
+.login_list li a{  display:block;position: absolute; top:3px; left:335px; width:100px; height:37px; }
+.login_list li a img{ width:100px;height:37px;  }
+
+
